@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace LeetCode.Challenges._0001TwoSum;
-public class Solution
+namespace LeetCode.Challenges.P0001;
+public class Solution : ILeetCodeProblem
 {
     public int[] TwoSum(int[] nums, int target)
     {
@@ -20,5 +20,10 @@ public class Solution
             }
         }
         return null;
+    }
+    public void Run()
+    {
+        int[] result = TwoSum(new int[] { 2, 7, 11, 15 }, 9);
+        Console.WriteLine($"[{string.Join(", ", result)}]"); // Expected Output: [0, 1]
     }
 }

@@ -2,36 +2,58 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LeetCode.Challenges_GroupAnagrams
+namespace LeetCode.Challenges.P0049  // 🔥 Fixed Namespace (Consistent Naming)
 {
-    public class Solution
+    public class Solution : ILeetCodeProblem  // 🔥 Implementing the Interface
     {
         public IList<IList<string>> GroupAnagrams(string[] strs)
         {
-            IList<IList<string>> result = new List<IList<string>>();
             Dictionary<string, List<string>> grouped = new Dictionary<string, List<string>>();
 
-            for (int i = 0; i < strs.Length; i++)
+            foreach (string word in strs)
             {
-                char[] compareWord = strs[i].ToCharArray();
-                Array.Sort(compareWord);
-                string key = new string(compareWord);
+                char[] sortedChars = word.ToCharArray();
+                Array.Sort(sortedChars);
+                string key = new string(sortedChars);
 
-                if (grouped.ContainsKey(key))
+                if (!grouped.ContainsKey(key))
                 {
-                    grouped[key].Add(strs[i]);
+                    grouped[key] = new List<string>();
                 }
-                else
-                {
-                    grouped[key] = new List<string> { strs[i] };
-                }
-            }
-            foreach (var group in grouped.Values)
-            {
-                result.Add(group);
+
+                grouped[key].Add(word);
             }
 
-            return result;
+            return grouped.Values.ToList();
+        }
+
+        // 🔥 Implementing Run() for Automatic Execution
+        public void Run()
+        {
+            Console.WriteLine("Running Group Anagrams Test Cases:");
+
+            string[] test1 = { "eat", "tea", "tan", "ate", "nat", "bat" };
+            string[] test2 = { "" };
+            string[] test3 = { "a" };
+
+            Console.WriteLine($"Input: [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"]");
+            PrintResult(GroupAnagrams(test1));
+
+            Console.WriteLine($"Input: [\"\"]");
+            PrintResult(GroupAnagrams(test2));
+
+            Console.WriteLine($"Input: [\"a\"]");
+            PrintResult(GroupAnagrams(test3));
+        }
+
+        private void PrintResult(IList<IList<string>> result)
+        {
+            Console.Write("[");
+            foreach (var group in result)
+            {
+                Console.Write("[\"" + string.Join("\", \"", group) + "\"], ");
+            }
+            Console.WriteLine("]");
         }
     }
 }
